@@ -1,4 +1,4 @@
-# I2C_ESC
+# I2C_ESC  [![Build Status](https://travis-ci.com/FireCastLabs/I2C_ESC.svg?branch=master)](https://travis-ci.com/FireCastLabs/I2C_ESC)
 An ESC control library for controlling an Aerostar RVS TYPE ESC w/Reverse Function line over an Adafruit PCA9685 16-Channel 12-bit PWM/Servo Driver and I2C interface
 
 ## Summary
