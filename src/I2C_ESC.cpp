@@ -34,9 +34,9 @@ I2C_ESC::~I2C_ESC()
 void I2C_ESC::calib(void)
 {
 	I2C_Servo.writeMicroseconds(oPin, oMax);
-		delay(ESC_CAL_DELAY);
+		delay(calibrationDelay);
 	I2C_Servo.writeMicroseconds(oPin, oMin);
-		delay(ESC_CAL_DELAY);
+		delay(calibrationDelay);
 	arm();
 }
 
@@ -53,7 +53,7 @@ void I2C_ESC::arm(void)
  */
 void I2C_ESC::stop(void)
 {
-	I2C_Servo.writeMicroseconds(oPin, ESC_STOP_PULSE);
+	I2C_Servo.writeMicroseconds(oPin, stopPulse);
 }
 
 /*
@@ -85,12 +85,46 @@ void I2C_ESC::reverse(void)
 	}
 }
 
+/*
+ * Get the current calibration delay in miliseconds
+ *
+ */
+uint32_t getCalibrationDelay(void)
+{
+	return calibrationDelay;
+}
 
+/*
+ * Set the current calibration delay in miliseconds
+ *
+ */
+void setCalibrationDelay(uint32_t calibration_delay)
+{
+	calibrationDelay = calibration_delay;
+}
+
+/*
+ * Get the current Stop pulse in microseconds
+ *
+ */
+uint32_t getStopPulse(void)
+{
+	return stopPulse;
+}
+
+/*
+ * Set the current Stop pulse in microseconds
+ *
+ */
+void setStopPulse(uint32_t stop_pulse)
+{
+	stopPulse = stop_pulse;
+}
 
 /*
  * Wrap the Adafruit_PWMServoDriver functions
  * These are 1-to-1 mappings and need to be checked when the wapped Library changes
- * Updated with v2.2.0
+ * Updated with adafruit/Adafruit-PWM-Servo-Driver-Library v2.2.0
  */
 
 void I2C_ESC::begin(uint8_t prescale)
