@@ -15,8 +15,6 @@
 
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>	// Including the Adafruit I2C PWM extender Servo library
-#define ESC_CAL_DELAY	(8000)	// Calibration delay between maximum and minimum (milisecond)
-#define ESC_STOP_PULSE	(500)	// Stop Pulse value in miliseconds
 
 class I2C_ESC
 {
@@ -28,6 +26,10 @@ class I2C_ESC
 		void stop(void);
 		void speed(int ESC_val);
 		void reverse(void);
+		uint32_t getCalibrationDelay(void);
+		void setCalibrationDelay(uint32_t calibration_delay);
+		uint32_t getStopPulse(void);
+		void setStopPulse(uint32_t stop_pulse);
 
 		// Wrap the public Adafruit_PWMServoDriver functions from v2.2.0
 		void begin(uint8_t prescale = 0);
@@ -58,6 +60,9 @@ class I2C_ESC
 		int oMax = 2000;
 		int oESC = 1000;
 		int oArm = 500;
+		uint32_t calibrationDelay = 8000;	// Calibration delay (miliseconds)
+		uint32_t stopPulse = 500;	// Stop pulse (microseconds)
+
 		Adafruit_PWMServoDriver I2C_Servo; // create I2C servo object to control one of 16 ESCs
 };
 
