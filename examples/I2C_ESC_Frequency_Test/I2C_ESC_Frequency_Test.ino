@@ -51,6 +51,8 @@ void setup() {
   myESC.setPWMFreq(SERVO_FREQ);
   myESC1.setPWMFreq(SERVO_FREQ);
 
+  delay(10); // Set a small delay to allow the PCA9685 chips time to set their frequency
+
   pinMode(LED_PIN, OUTPUT);    // Set Pin for LED Visual Output
 
   // Send the Arm value to each ESC so the ESCs will be ready to take commands
