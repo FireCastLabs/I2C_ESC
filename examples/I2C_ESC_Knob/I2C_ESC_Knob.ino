@@ -38,6 +38,7 @@ void setup() {
   myESC.arm();                          // Send the Arm value
   digitalWrite(LED_PIN, HIGH);          // LED High Once Armed
   delay(5000);                          // Wait for a while
+  myESC.speed(SPEED_MIN);               // Set to minimum speed now that the ESC should be Armed
 }
 
 void loop() {
