@@ -25,14 +25,16 @@ Adafruit PCA9685 16-Channel Servo Drivers can be purchased on [Adafruit’s webs
 
 - `I2C_ESC(uint8_t I2C_Address, int ESC_pin, int rev_pin, int outputMin, int outputMax, int armVal)`
   - Default constructor
-- `calib(int oPin)`
-  - Calibrate motor on specified pin
-- `arm(int oPin)`
-  - Arm motor on specified pin
-- `stop(int oPin)`
-  - Stop motor on specified pin
-- `speed(int oPin, int speed)`
-  - Set speed for motor on specified pin
+- `calib()`
+  - Calibrate motor
+- `arm()`
+  - Arm motor
+- `stop()`
+  - Stop motor
+- `speed(int speed)`
+  - Set speed for motor
+- `reverse()`
+  - stop and reverse the motors
   
   ## Version History
   - no releases have been made yet
