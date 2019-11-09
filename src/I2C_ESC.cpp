@@ -83,6 +83,9 @@ void I2C_ESC::reverse(void)
 		I2C_Servo.setPWM(rPin, 0, 4096);  // turns pin fully off
 		REVERSE_MODE = false; // We are no longer in reverse mode
 	}
+
+	delay(100); // Set a small delay to allow the PCA9685 chips time to rearm
+	arm(); // Send arm again to confim motors are ready 
 }
 
 /*
