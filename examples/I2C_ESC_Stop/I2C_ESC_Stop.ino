@@ -27,6 +27,9 @@ void setup() {
    */
   myESC.setOscillatorFrequency(26075000);  // The int.osc. is closer to 27MHz
   myESC.setPWMFreq(FREQ);  // This is the analog servo PWM frequency, alternativly you could set this using the prescale 60Hz is a prescale of 105
+
+  delay(10); // Set a small delay to allow the PCA9685 chips time to set their frequency
+
   pinMode(LED_PIN, OUTPUT);       // LED Visual Output
   myESC.arm();                    // Send the Arm value so the ESC will be ready to take commands
   digitalWrite(LED_PIN, HIGH);    // LED High Once Armed
@@ -37,6 +40,7 @@ void loop() {
   myESC.speed(1100);              // Set the speed to a testing value between SPEED_MIN (1000) and SPEED_MAX (2000)
   delay(500);                     // Wait for a while 
   myESC.stop();                   // Stop the ESC altogether
-  delay(5000);                    // Wait for a while until we restart  
+  delay(5000);                    // Wait for a while until we restart
+  myESC.speed(SPEED_MIN);         // Set ESC to minimum speed now that the ESC should be Armed
 }
 
