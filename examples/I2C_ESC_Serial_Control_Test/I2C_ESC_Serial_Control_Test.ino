@@ -54,6 +54,8 @@ void setup() {
   myESC.setPWMFreq(SERVO_FREQ);  
   myESC1.setPWMFreq(SERVO_FREQ);
 
+  delay(10); // Set a small delay to allow the PCA9685 chips time to set their frequency
+
   pinMode(LED_PIN, OUTPUT);    // Set Pin for LED Visual Output
 
   // Send the Arm value to each ESC so the ESCs will be ready to take commands
@@ -61,11 +63,13 @@ void setup() {
   myESC1.arm();
   delay(5);                     // Wait for 5 milliseconds before showing the LED visual for Arming confirmation
   digitalWrite(LED_PIN, HIGH);  // LED High Once Armed
-  delay(1000);                  // Wait for a while before going in to the loop
+  delay(5000);                  // Wait for a while before going in to the loop
+  myESC.speed(SPEED_MIN);       // Set ESC to minimum speed now that the ESC should be Armed
+  myESC1.speed(SPEED_MIN);      // Set ESC to minimum speed now that the ESC should be Armed
 }
 
 void loop() {
-  if (Serial.available() > 0)                             // read the value from the serial
+  if (Serial.available() > 0)   // read the value from the serial
   {
     oESC = Serial.parseInt();
     if (oESC == 5)
