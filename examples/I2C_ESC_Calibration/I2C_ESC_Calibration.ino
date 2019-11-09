@@ -34,22 +34,24 @@ void setup() {
   // Set up the I2C based PWM/Servo extenders
   myESC.begin();
 
-    /*
+  /*
    * In theory the internal oscillator (clock) is 25MHz but it really isn't that precise. 
    * You can 'calibrate' by tweaking this number till you get the frequency you're expecting!
    * The int.osc. is closer to 27MHz and is used for calculating things like writeMicroseconds
    */
   myESC.setOscillatorFrequency(26075000);
 
-  /*
+ /*
   * Set the analog servo PWM frequency
   * alternativly you could set this using the prescale 60Hz is a prescale of about 105 (depending on the internal oscillator frequency)
   */
   myESC.setPWMFreq(SERVO_FREQ);
-  
+
+  delay(10); // Set a delay to allow the PCA9685 chips to set their frequency
+
   // Start calibration cycle
-  pinMode(LED_PIN, OUTPUT);       // LED Visual Output (can be removed)
-  digitalWrite(LED_PIN, HIGH);    // LED High while signal is High (can be removed)
+  pinMode(LED_PIN, OUTPUT);       // LED Visual Output
+  digitalWrite(LED_PIN, HIGH);    // LED High while signal is High indicating it's time to power the ESC
   myESC.calib();                  // Calibration of the Max and Min value the ESC is expecting
   myESC.stop();                   // Stop the ESC to avoid damage or injuries
   digitalWrite(LED_PIN, LOW);     // LED Low when the calibration is done (can be removed)
