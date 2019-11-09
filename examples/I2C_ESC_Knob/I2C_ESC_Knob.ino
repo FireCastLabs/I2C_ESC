@@ -31,6 +31,9 @@ void setup() {
   //Set up the PWM extenders
   myESC.begin();
   myESC.setPWMFreq(FREQ);  // This is the analog servo PWM frequency, alternativly you could set this using the prescale 60Hz is a prescale of 105
+
+  delay(10); // Set a small delay to allow the PCA9685 chips time to set their frequency
+
   pinMode(LED_PIN, OUTPUT);             // LED Visual Output
   myESC.arm();                          // Send the Arm value
   digitalWrite(LED_PIN, HIGH);          // LED High Once Armed
