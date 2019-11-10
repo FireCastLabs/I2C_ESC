@@ -120,7 +120,7 @@ void rampSpeed(int speedInitial, int speedFinal, int step, int stepTime)
 		// Goes from Minimum Initial speed to Maximum final speed
 		for (oESC = speedInitial; oESC <= speedFinal; oESC += step)
 		{
-			myESC.speed(oESC);	// tell ESC to go to the oESC speed value
+			speed(oESC);	// tell ESC to go to the oESC speed value
 			delay(stepTime);	// waits 10ms for the ESC to reach speed
 		}
 	}
@@ -129,7 +129,7 @@ void rampSpeed(int speedInitial, int speedFinal, int step, int stepTime)
 		// Goes from Maximum Initial speed to Minimum final speed
 		for (oESC = speedInitial; oESC <= speedFinal; oESC -= step)
 		{
-			myESC.speed(oESC);	// tell ESC to go to the oESC speed value
+			speed(oESC);	// tell ESC to go to the oESC speed value
 			delay(stepTime);	// waits 10ms for the ESC to reach speed
 		}
 	}
