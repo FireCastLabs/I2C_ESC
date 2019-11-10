@@ -89,30 +89,12 @@ void I2C_ESC::reverse(void)
 }
 
 /*
- * Get the current calibration delay in miliseconds
- *
- */
-uint32_t I2C_ESC::getCalibrationDelay(void)
-{
-	return calibrationDelay;
-}
-
-/*
  * Set the current calibration delay in miliseconds
  *
  */
 void I2C_ESC::setCalibrationDelay(uint32_t calibration_delay)
 {
 	calibrationDelay = calibration_delay;
-}
-
-/*
- * Get the current Stop pulse in microseconds
- *
- */
-uint32_t I2C_ESC::getStopPulse(void)
-{
-	return stopPulse;
 }
 
 /*

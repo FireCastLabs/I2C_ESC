@@ -35,6 +35,10 @@ Adafruit PCA9685 16-Channel Servo Drivers can be purchased on [Adafruit’s webs
   - Set speed for motor
 - `reverse()`
   - stop and reverse the motors
+- `setCalibrationDelay(uint32_t calibration_delay)`
+  - set the calibration delay for ESC calibration. Default delay is 8000 ms
+- `setStopPulse(uint32_t stop_pulse)`
+  - set the stop pulse value. The default is 500 us
 - `rampSpeed(int speedInitial, int speedFinal, int step = 1, int stepTime = 10)`
   - Change the ESC/motor speed by step value from an initial to final speed. The step time is how long in milliseconds between each step
 
