@@ -113,6 +113,8 @@ void I2C_ESC::setStopPulse(uint32_t stop_pulse)
  */
 void rampSpeed(int speedInitial, int speedFinal, int step, int stepTime)
 {
+	int oESC;  // Variable for the speed sent to the ESC
+
 	if (speedInitial < speedFinal)
 	{
 		// Goes from Minimum Initial speed to Maximum final speed
