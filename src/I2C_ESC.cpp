@@ -125,6 +125,33 @@ void I2C_ESC::setStopPulse(uint32_t stop_pulse)
 }
 
 /*
+ * Change the ESC/motor speed by step value from an initial to final speed
+ * Step time is the miliseconds between each speed change, default it 10 ms
+ *
+ */
+void rampSpeed(int speedInitial, int speedFinal, int step, int stepTime)
+{
+	if (speedInitial < speedFinal)
+	{
+		// Goes from Minimum Initial speed to Maximum final speed
+		for (oESC = speedInitial; oESC <= speedFinal; oESC += step)
+		{
+			myESC.speed(oESC);	// tell ESC to go to the oESC speed value
+			delay(stepTime);	// waits 10ms for the ESC to reach speed
+		}
+	}
+	else
+	{
+		// Goes from Maximum Initial speed to Minimum final speed
+		for (oESC = speedInitial; oESC <= speedFinal; oESC -= step)
+		{
+			myESC.speed(oESC);	// tell ESC to go to the oESC speed value
+			delay(stepTime);	// waits 10ms for the ESC to reach speed
+		}
+	}
+}
+
+/*
  * Wrap the Adafruit_PWMServoDriver functions
  * These are 1-to-1 mappings and need to be checked when the wapped Library changes
  * Updated with adafruit/Adafruit-PWM-Servo-Driver-Library v2.2.0

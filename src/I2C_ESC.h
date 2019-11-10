@@ -30,6 +30,7 @@ class I2C_ESC
 		void setCalibrationDelay(uint32_t calibration_delay);
 		uint32_t getStopPulse(void);
 		void setStopPulse(uint32_t stop_pulse);
+		void rampSpeed(int speedInitial, int speedFinal, int step = 1, int stepTime = 10);
 
 		// Wrap the public Adafruit_PWMServoDriver functions from v2.2.0
 		void begin(uint8_t prescale = 0);

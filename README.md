@@ -17,7 +17,7 @@ https://learn.adafruit.com/16-channel-pwm-servo-driver
 
 ### Hardware
 
-Aerostar RVS 40A Electronic Speed Controller w/Reverse Function 3A BEC (2~4S) can be purchased through [Hobby King's website](https://hobbyking.com/en_us/aerostar-rvs-40a-electronic-speed-controller-w-reverse-function-and-2a-bec-2-4s.html?wrh_pdp=2) other versions of this Aerostar RVS ESC with a Reverse Function line should also work. 
+Aerostar RVS 40A Electronic Speed Controller w/Reverse Function 3A BEC (2~4S) can be purchased through [Hobby King's website](https://hobbyking.com/en_us/aerostar-rvs-40a-electronic-speed-controller-w-reverse-function-and-2a-bec-2-4s.html?wrh_pdp=2) other versions of this Aerostar RVS ESC with a Reverse Function line should also work.
 
 Adafruit PCA9685 16-Channel Servo Drivers can be purchased on [Adafruit’s website](https://www.adafruit.com/product/815). See the [Adafruit PCA9685 16-Channel Servo Driver user’s guide and tutorial](https://learn.adafruit.com/16-channel-pwm-servo-driver/overview) and the [adafruit/Adafruit-PWM-Servo-Driver-Library](https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library) for more details.
 
@@ -35,6 +35,8 @@ Adafruit PCA9685 16-Channel Servo Drivers can be purchased on [Adafruit’s webs
   - Set speed for motor
 - `reverse()`
   - stop and reverse the motors
-  
+- `rampSpeed(int speedInitial, int speedFinal, int step = 1, int stepTime = 10)`
+  - Change the ESC/motor speed by step value from an initial to final speed. The step time is how long in milliseconds between each step
+
   ## Version History
   - no releases have been made yet
