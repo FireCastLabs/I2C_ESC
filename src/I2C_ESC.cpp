@@ -111,7 +111,7 @@ void I2C_ESC::setStopPulse(uint32_t stop_pulse)
  * Step time is the miliseconds between each speed change, default it 10 ms
  *
  */
-void rampSpeed(int speedInitial, int speedFinal, int step, int stepTime)
+void I2C_ESC::rampSpeed(int speedInitial, int speedFinal, int step, int stepTime)
 {
 	int oESC;  // Variable for the speed sent to the ESC
 
