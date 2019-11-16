@@ -42,5 +42,16 @@ Adafruit PCA9685 16-Channel Servo Drivers can be purchased on [Adafruit’s webs
 - `rampSpeed(int speedInitial, int speedFinal, int step = 1, int stepTime = 10)`
   - Change the ESC/motor speed by step value from an initial to final speed. The step time is how long in milliseconds between each step
 
+Wrapped Adafruit-PWM-Servo-Driver-Library specific notes
+The following wrapped Adafruit-PWM-Servo-Driver-Library specific functions should be used only once per Adafruit PCA9685 PWM Servo Driver and not once per library instance. Calling these functions multiple times can cause undesirable behaviors.
+- `begin(uint8_t prescale = 0)`
+- `reset()`
+- `sleep()`
+- `wakeup()`
+- `setExtClk(uint8_t prescale)`
+- `setPWMFreq(float freq)`
+- `setOutputMode(bool totempole)`
+- `setOscillatorFrequency(uint32_t freq)`
+
   ## Version History
   - no releases have been made yet
