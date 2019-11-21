@@ -28,6 +28,7 @@ void setup() {
   // Start serial port
   Serial.begin(9600);
   Serial.println("I2C Controller Test with ESC");
+
   /*
    * Set up the I2C based PWM/Servo extenders
    * This is only done once per Adafruit PCA9685 PWM/Servo driver
