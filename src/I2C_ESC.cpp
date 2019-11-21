@@ -18,8 +18,6 @@ I2C_ESC::I2C_ESC(uint8_t I2C_Address, int ESC_pin, int rev_pin, int outputMin, i
 	oMax   = outputMax;
 	oArm   = armVal;
 	I2C_Servo  = Adafruit_PWMServoDriver(oBoard);
-	// Ensure the reverse pin is in off mode at startup
-	//I2C_Servo.setPWM(rPin, 0, 4096);  // turns pin fully off
 }
 
 // < Destructor >
