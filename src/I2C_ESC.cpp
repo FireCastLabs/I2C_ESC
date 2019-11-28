@@ -136,7 +136,7 @@ void I2C_ESC::rampSpeed(int speedInitial, int speedFinal, int step, int stepTime
 /*
  * Wrap the Adafruit_PWMServoDriver functions
  * These are 1-to-1 mappings and need to be checked when the wapped Library changes
- * Updated with adafruit/Adafruit-PWM-Servo-Driver-Library v2.2.0
+ * Updated with adafruit/Adafruit-PWM-Servo-Driver-Library v2.3.0
  */
 
 void I2C_ESC::begin(uint8_t prescale)
