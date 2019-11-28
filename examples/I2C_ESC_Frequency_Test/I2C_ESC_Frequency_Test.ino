@@ -31,6 +31,7 @@ void setup() {
 
   /*
    * Set up the I2C based PWM/Servo extenders
+   * begin() calls the wire.begin() and should only be done once per chipset
    * This is only done once per Adafruit PCA9685 PWM/Servo driver
    */
   myESC.begin();
@@ -43,17 +44,17 @@ void setup() {
 
   /*
    * In theory the internal oscillator (clock) is 25MHz but it really isn't that precise. 
-   * You can 'calibrate' by tweaking this number till you get the frequency you're expecting!
-   * The int.osc. is closer to 27MHz and is used for calculating things like writeMicroseconds
-   * This is only done once per Adafruit PCA9685 PWM/Servo driver
+   * You can 'calibrate' by tweaking this number till you get the frequency you're expecting by checking with an ocsilliscope!
+   * The int.osc. is a range from about 23MHz to 27MHz and is used for calculating things like writeMicroseconds()
+   * We need to do this for each library instance as it is used in internal library calculations
    */
-  myESC.setOscillatorFrequency(26075000);
-  myESC1.setOscillatorFrequency(26075000);
+  myESC.setOscillatorFrequency(24600000);
+  myESC1.setOscillatorFrequency(25000000);
 
   /*
    * Set the analog servo PWM frequency
    * alternativly you could set this using the prescale 50Hz is a prescale of about ### (depending on the internal oscillator frequency)
-   * This is only done once per Adafruit PCA9685 PWM/Servo driver
+   * We need to do this for each library instance as it is used in internal library calculations
    */
   myESC.setPWMFreq(SERVO_FREQ);
   myESC1.setPWMFreq(SERVO_FREQ);
