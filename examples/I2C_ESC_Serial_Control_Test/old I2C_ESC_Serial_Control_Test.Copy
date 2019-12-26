@@ -44,6 +44,7 @@ void setup() {
 
   /*
    * Set up the I2C based PWM/Servo extenders
+   * begin() calls the wire.begin()
    * This is only done once per Adafruit PCA9685 PWM/Servo driver
    */
   myESC.begin();
