@@ -7,12 +7,9 @@
 /*
  * < Constructor > Sets up the proper pins to output.
  */
-I2C_ESC::I2C_ESC(uint8_t I2C_Address, int ESC_pin, int rev_pin, int outputMin, int outputMax, int armVal)
+I2C_ESC::I2C_ESC(uint8_t I2C_Address, int outputMin, int outputMax, int armVal)
 {
 	oBoard = I2C_Address;	// The I2C address on the TwoWire interface
-	oPin   = ESC_pin;	// ESC output Pin on the Adafruit PCA9685 16-Channel Servo Driver
-	rPin   = rev_pin;	// I2C_ESC Pin of outputing of a reverse signal on the Adafruit PCA9685 16-Channel Servo Driver
-	REVERSE_MODE = false; // start in normal mode
 
 	oMin   = outputMin;
 	oMax   = outputMax;
@@ -24,66 +21,6 @@ I2C_ESC::I2C_ESC(uint8_t I2C_Address, int ESC_pin, int rev_pin, int outputMin, i
 I2C_ESC::~I2C_ESC()
 {
 	// Nothing to destruct
-}
-
-/*
- * Calibrate the maximum and minimum PWM signal the ESC is expecting
- */
-void I2C_ESC::calib(void)
-{
-	I2C_Servo.writeMicroseconds(oPin, oMax);
-		delay(calibrationDelay);
-	I2C_Servo.writeMicroseconds(oPin, oMin);
-		delay(calibrationDelay);
-	arm();
-}
-
-/*
- * Arm the ESC
- */
-void I2C_ESC::arm(void)
-{
-	I2C_Servo.writeMicroseconds(oPin, oArm);
-}
-
-/*
- * Stop the ESC with the specified PWM signal the ESC is expecting
- */
-void I2C_ESC::stop(void)
-{
-	I2C_Servo.writeMicroseconds(oPin, stopPulse);
-}
-
-/*
- * Set the ESC Speed with the specified PWM signal the ESC is expecting
- */
-void I2C_ESC::speed(int Speed)
-{
-	oESC = constrain(Speed, oMin, oMax);
-	I2C_Servo.writeMicroseconds(oPin, oESC);
-}
-
-/*
- * Set the ESC Speed with the specified PWM signal the ESC is expecting
- */
-void I2C_ESC::reverse(void)
-{
-	// stop the motor before sending the reverse signal
-	stop();
-	// check whether we are in reverse mode
-	if (REVERSE_MODE == false)
-	{
-		I2C_Servo.setPWM(rPin, 4096, 0);  // turns pin fully on
-		REVERSE_MODE = true; // we are now in reverse mode
-	}
-	else
-	{
-		I2C_Servo.setPWM(rPin, 0, 4096);  // turns pin fully off
-		REVERSE_MODE = false; // We are no longer in reverse mode
-	}
-
-	delay(100); // Set a small delay to allow the PCA9685 chips time to rearm
-	arm(); // Send arm again to confim motors are ready 
 }
 
 /*
@@ -105,11 +42,100 @@ void I2C_ESC::setStopPulse(uint32_t stop_pulse)
 }
 
 /*
+ * Calibrate the maximum and minimum PWM signal the ESC is expecting
+ */
+void I2C_ESC::calib(int pin)
+{
+	I2C_Servo.writeMicroseconds(pin, oMax);
+		delay(calibrationDelay);
+	I2C_Servo.writeMicroseconds(pin, oMin);
+		delay(calibrationDelay);
+	arm(pin);
+}
+
+/*
+ * Array of 8 ESCs to Calibrate the maximum and minimum PWM signal the ESC is expecting
+ * This is not expected to work or actually be convenient due to the timing of the calibration process
+ */
+void I2C_ESC::calibArray(void)
+{
+	for (int count=0; count<8; count++)
+	{
+		I2C_Servo.writeMicroseconds(oPin[count], oMax);
+			delay(calibrationDelay);
+		I2C_Servo.writeMicroseconds(oPin[count], oMin);
+			delay(calibrationDelay);
+		arm(oPin[count]);
+		delay(5000);
+	}
+}
+
+/*
+ * Arm the ESC
+ */
+void I2C_ESC::arm(int pin)
+{
+	I2C_Servo.writeMicroseconds(pin, oArm);
+}
+
+/*
+ * Arm the ESC
+ */
+void I2C_ESC::armArray(void)
+{
+	for (int count=0; count<8; count++)
+	{
+		I2C_Servo.writeMicroseconds(oPin[count], oArm);
+	}
+}
+
+
+/*
+ * Stop the ESC with the specified PWM signal the ESC is expecting
+ */
+void I2C_ESC::stop(int pin)
+{
+	I2C_Servo.writeMicroseconds(pin, stopPulse);
+}
+
+/*
+ * Stop the ESC with the specified PWM signal the ESC is expecting
+ */
+void I2C_ESC::stopArray(void)
+{
+	for (int count=0; count<8; count++)
+	{
+		I2C_Servo.writeMicroseconds(oPin[count], stopPulse);
+	}
+}
+
+/*
+ * Set the ESC Speed with the specified PWM signal the ESC is expecting
+ */
+void I2C_ESC::speed(int pin, int Speed)
+{
+	int oESC = constrain(Speed, oMin, oMax);
+	I2C_Servo.writeMicroseconds(pin, oESC);
+}
+
+/*
+ * Set the ESC Speed with the specified PWM signal the ESC is expecting
+ */
+void I2C_ESC::speedArray(int Speed)
+{
+	for (int count=0; count<8; count++)
+	{
+		int oESC = constrain(Speed, oMin, oMax);
+		I2C_Servo.writeMicroseconds(oPin[count], oESC);
+	}
+}
+
+/*
  * Change the ESC/motor speed by step value from an initial to final speed
  * Step time is the miliseconds between each speed change, default it 10 ms
  *
  */
-void I2C_ESC::rampSpeed(int speedInitial, int speedFinal, int step, int stepTime)
+void I2C_ESC::rampSpeed(int pin, int speedInitial, int speedFinal, int step, int stepTime)
 {
 	int oESC;  // Variable for the speed sent to the ESC
 
@@ -118,7 +144,7 @@ void I2C_ESC::rampSpeed(int speedInitial, int speedFinal, int step, int stepTime
 		// Goes from Minimum Initial speed to Maximum final speed
 		for (oESC = speedInitial; oESC <= speedFinal; oESC += step)
 		{
-			speed(oESC);	// tell ESC to go to the oESC speed value
+			speed(pin, oESC);	// tell ESC to go to the oESC speed value
 			delay(stepTime);	// waits 10ms for the ESC to reach speed
 		}
 	}
@@ -127,16 +153,105 @@ void I2C_ESC::rampSpeed(int speedInitial, int speedFinal, int step, int stepTime
 		// Goes from Maximum Initial speed to Minimum final speed
 		for (oESC = speedInitial; oESC <= speedFinal; oESC -= step)
 		{
-			speed(oESC);	// tell ESC to go to the oESC speed value
+			speed(pin, oESC);	// tell ESC to go to the oESC speed value
 			delay(stepTime);	// waits 10ms for the ESC to reach speed
 		}
 	}
 }
 
 /*
+ * Change the ESC/motor speed by step value from an initial to final speed
+ * Step time is the miliseconds between each speed change, default it 10 ms
+ *
+ */
+void I2C_ESC::rampSpeedArray(int speedInitial, int speedFinal, int step, int stepInterval)
+{
+	int oESC;  // Variable for the speed sent to the ESC
+
+	if (speedInitial < speedFinal)
+	{
+		// Goes from Minimum Initial speed to Maximum final speed
+		for (oESC = speedInitial; oESC <= speedFinal; oESC += step)
+		{
+			for (int count=0; count<8; count++) // cycle through the ESCs
+			{
+				speed(oPin[count], oESC);	// tell ESC to go to the oESC speed value
+			}
+
+			delay(stepInterval);	// waits 10ms for the ESCs to reach speed
+		}
+	}
+	else
+	{
+		// Goes from Maximum Initial speed to Minimum final speed
+		for (oESC = speedInitial; oESC <= speedFinal; oESC -= step)
+		{
+			for (int count=0; count<8; count++) // cycle through the ESCs
+			{
+				speed(oPin[count], oESC);	// tell ESC to go to the oESC speed value
+			}
+
+			delay(stepInterval);	// waits 10ms for the ESC to reach speed
+		}
+	}
+}
+
+/*
+ * Set the ESC Speed with the specified PWM signal the ESC is expecting
+ */
+void I2C_ESC::reverse(int pin)
+{
+	// stop the ESC before sending the reverse signal
+	stop(pin);
+	// check whether we are in reverse mode
+	if (REVERSE_MODE == false)
+	{
+		I2C_Servo.setPWM(pin+1, 4096, 0);  // turns pin+1 fully on
+		REVERSE_MODE = true; // we are now in reverse mode
+	}
+	else
+	{
+		I2C_Servo.setPWM(pin+1, 0, 4096);  // turns pin+1 fully off
+		REVERSE_MODE = false; // We are no longer in reverse mode
+	}
+
+	delay(100); // Set a small delay to allow the PCA9685 chips time to rearm
+	arm(pin); // Send arm again to confim motors are ready 
+}
+
+/*
+ * Set the ESC Speed with the specified PWM signal the ESC is expecting
+ */
+void I2C_ESC::reverseArray(void)
+{
+	// stop the ESCs before sending the reverse signal
+	stopArray();
+	// check whether we are in reverse mode
+	if (REVERSE_MODE == false)
+	{
+		for (int count=0; count<8; count++) // cycle through the ESCs
+		{
+			I2C_Servo.setPWM(oPin[count+1], 4096, 0);  // turns pins+1 fully on
+		}
+		REVERSE_MODE = true; // we are now in reverse mode
+	}
+	else
+	{
+		for (int count=0; count<8; count++) // cycle through the ESCs
+		{
+			I2C_Servo.setPWM(oPin[count+1], 0, 4096);  // turns pins+1 fully off
+		}
+		REVERSE_MODE = false; // We are no longer in reverse mode
+	}
+
+	delay(100); // Set a small delay to allow the PCA9685 chips time to rearm
+	armArray(); // Send arm again to confim motors are ready 
+}
+
+/*
  * Wrap the Adafruit_PWMServoDriver functions
  * These are 1-to-1 mappings and need to be checked when the wapped Library changes
- * Updated with adafruit/Adafruit-PWM-Servo-Driver-Library v2.3.0
+ * Updated with adafruit/Adafruit-PWM-Servo-Driver-Library v2.3.1
  */
 
 void I2C_ESC::begin(uint8_t prescale)
