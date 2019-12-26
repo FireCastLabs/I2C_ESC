@@ -52,12 +52,18 @@ void setup() {
 
   /*
    * In theory the internal oscillator (clock) is 25MHz but it really isn't that precise. 
-   * You can 'calibrate' by tweaking this number till you get the frequency you're expecting!
-   * The int.osc. is closer to 27MHz and is used for calculating things like writeMicroseconds
-   * This is only done once per Adafruit PCA9685 PWM/Servo driver
+   * You must 'calibrate' by tweaking this number until you get the PWM update frequency you're expecting!
+   * The int.osc. is used for calculating things like writeMicroseconds
+   * Analog servos run at ~50 Hz updates, It is very importaint to use an oscilloscope in setting the frequency 
+   * for the I2C PCA9685 PWM/Servo extender chip. 
+   * 1) Attach the oscilloscope to one of the PWM signal pin and ground on the I2C PCA9685 chip you are setting the value for.
+   * 2) Adjust setOscillatorFrequency() until the PWM update frequency is the expected value (50Hz for most ESCs)
+   * Setting the value here is specific to each individual I2C PCA9685 chip and affects the calculations for the PWM update frequency.
+   * Failure to correctly set this value will cause unusual behavior in the ESCs
+   * We only need to do this once per chipset
    */
-  myESC.setOscillatorFrequency(26075000);
-  myESC1.setOscillatorFrequency(26075000);
+  myESC.setOscillatorFrequency(24600000);
+  myESC1.setOscillatorFrequency(25000000);
 
   /*
   * Set the analog servo PWM frequency
