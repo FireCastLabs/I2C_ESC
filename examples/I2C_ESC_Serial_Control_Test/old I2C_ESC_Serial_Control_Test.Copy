@@ -37,7 +37,8 @@ int oESC;                                                 // Variable for the sp
  */
 I2C_ESC myESC (0x40, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 
-void setup() {
+void setup()
+{
   // start serial port
   Serial.begin(9600);
   Serial.println("I2C Controller Test with ESC");
@@ -80,7 +81,8 @@ void setup() {
   myESC.speed(ESC_PIN, SPEED_MIN);   // set speed to minimum to confirm activation of motor
 }
 
-void loop() {
+void loop()
+{
   if (Serial.available() > 0)                             // read the value from the serial
   {
     oESC = Serial.parseInt();

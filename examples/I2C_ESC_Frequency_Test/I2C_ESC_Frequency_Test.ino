@@ -25,7 +25,8 @@ int oFrequency;                 // Variable for the frequency sent to the ESC
 I2C_ESC myESC (0x40, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 I2C_ESC myESC1 (0x41, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 
-void setup() {
+void setup()
+{
   // Start serial port
   Serial.begin(9600);
   Serial.println("I2C Controller Test with ESC");
@@ -81,7 +82,8 @@ void setup() {
   delay(1000);                  // Wait for a while before starting the loop
 }
 
-void loop() {
+void loop()
+{
   if (Serial.available() > 0)                             // read the value from the serial
   {
     oFrequency = Serial.parseInt();

@@ -24,7 +24,8 @@ int oESC;                                                 // Variable for the sp
  */
 I2C_ESC myESC (0x40, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 
-void setup() {
+void setup()
+{
   // start serial port
   Serial.begin(9600);
   Serial.println("ESC Ramp test over the I2C PWM/Servo extension interface");
@@ -66,17 +67,26 @@ void setup() {
   myESC.speed(ESC_PIN, SPEED_MIN);                        // Set to minimum speed now that the ESC should be Armed
 }
 
-void loop() {
+void loop()
+{
   Serial.println("ESC Ramp up");
-  for (oESC = SPEED_MIN; oESC <= SPEED_MAX; oESC += 1) {  // goes from Minimum microseconds to Maximum microseconds
+
+  // goes from Minimum microseconds to Maximum microseconds
+  for (oESC = SPEED_MIN; oESC <= SPEED_MAX; oESC += 1)
+  {
     myESC.speed(ESC_PIN, oESC);                           // tell ESC to go to the oESC speed value
     delay(10);                                            // waits 10ms for the ESC to reach speed
   }
+
   delay(1000);
   Serial.println("ESC Ramp down");
-  for (oESC = SPEED_MAX; oESC >= SPEED_MIN; oESC -= 1) {  // goes from Maximum microseconds to Minimum microseconds
+
+  // goes from Maximum microseconds to Minimum microseconds
+  for (oESC = SPEED_MAX; oESC >= SPEED_MIN; oESC -= 1)
+  {
     myESC.speed(ESC_PIN, oESC);                           // tell ESC to go to the oESC speed value
     delay(10);                                            // waits 10ms for the ESC to reach speed  
    }
+
   delay(5000);                                            // Wait for a while before restarting the loop
 }

@@ -1,22 +1,23 @@
-/** 
-This sketch is for running a drone motor using an ESC
-using the serial monitor as an input for speed.
-
-Maximum speed input:  2000
-Minimum speed input:  1000 the zero throttle speed
-
-Decreasing below the minimum will result in the motor stalling.
-Increasing above the maximum will be adjusted to the maximum. 
-
-Hardware: 1 * Arduino combatable board with I2C bus
-          : 1 * ESC
-          : 1 * external powersource for the ESC.
-          : 1 * 
-
-
-WireColor Coding:   black = ground
-                    red = 
-                    white = signal
+/**
+ * This sketch is for running a drone motor using an ESC
+ * using the serial monitor as an input for speed.
+ *
+ * Maximum speed input:  2000
+ * Minimum speed input:  1000 the zero throttle speed
+ *
+ * Decreasing below the minimum will result in the motor stalling.
+ * Increasing above the maximum will be adjusted to the maximum. 
+ *
+ * Hardware:
+ *           : 1 * Arduino compatible board for I2C bus
+ *           : 1 * ESC
+ *           : 1 * external powersource for the ESC.
+ *           : 1 * 
+ *
+ * ESC servo signal Wire Color Coding:
+ *                     black = ground
+ *                     red = not used
+ *                     white = signal
 **/
 
 #include "I2C_ESC.h"
@@ -38,7 +39,8 @@ int oESC;                                                 // Variable for the sp
 I2C_ESC myESC (0x40, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 I2C_ESC myESC1 (0x41, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 
-void setup() {
+void setup()
+{
   // start serial port
   Serial.begin(9600);
   Serial.println("I2C Controller Test with ESC");
@@ -71,7 +73,7 @@ void setup() {
   * alternativly you could set this using the prescale 50Hz is a prescale of about ### (depending on the internal oscillator frequency)
   * This is only done once per Adafruit PCA9685 PWM/Servo driver
   */
-  myESC.setPWMFreq(SERVO_FREQ);  
+  myESC.setPWMFreq(SERVO_FREQ);
   myESC1.setPWMFreq(SERVO_FREQ);
 
 
@@ -89,7 +91,8 @@ void setup() {
   myESC1.speed(ESC_PIN, SPEED_MIN);      // Set ESC to minimum speed now that the ESC should be Armed
 }
 
-void loop() {
+void loop()
+{
   if (Serial.available() > 0)   // read the value from the serial
   {
     oESC = Serial.parseInt();

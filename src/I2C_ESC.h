@@ -66,7 +66,7 @@ class I2C_ESC
 		int oESC = 1000;
 		int oArm = 500;
 		uint32_t calibrationDelay = 8000;	// Calibration delay (miliseconds)
-		uint32_t stopPulse = 500;	// Stop pulse (microseconds)
+		uint32_t stopPulse = 500;	// The ESC specific Stop pulse (microseconds) value else use a Zero Throttle value (1000)
 
 		Adafruit_PWMServoDriver I2C_Servo; // create I2C servo object to control one of 16 ESCs
 };

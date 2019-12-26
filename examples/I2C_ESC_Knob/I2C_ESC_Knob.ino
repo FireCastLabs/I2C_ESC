@@ -30,7 +30,8 @@ int potVal;                     // variable to read the value from the analog pi
  */
 I2C_ESC myESC (0x40, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 
-void setup() {
+void setup()
+{
   // start serial port
   Serial.begin(9600);
   Serial.println("Read potentiometer for ESC Control test over I2C PWM/Servo extender");
@@ -72,7 +73,8 @@ void setup() {
   myESC.speed(ESC_PIN, SPEED_MIN);               // Set to minimum speed now that the ESC should be Armed
 }
 
-void loop() {
+void loop()
+{
   potVal = analogRead(POT_PIN);         // reads the value of the potentiometer (value between 0 and 1023)
   potVal = map(potVal, 0, 1023, SPEED_MIN, SPEED_MAX);  // scale it to use it with the ESC (value between Minimum and Maximum)
   myESC.speed(ESC_PIN, potVal);                  // sets the ESC speed according to the scaled value

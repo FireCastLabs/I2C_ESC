@@ -1,21 +1,21 @@
 /*
-  ESC_Calibration
-    It's important to calibrate the ESC with the values (uS / microseconds) it will expect for Min and Max speed.
-    This one requires a little procedure:  
-      1 - Connect your Arduino board and your Adafruit PCA9685 16-Channel 12-bit PWM/Servo Driver - I2C interface
-      2 - Load the sketch to your Arduino board, then remove power
-      2 - Connect your ESC to the Arduino board
-      3 - Power your Arduino board
-      4 - Once the LED (LED_PIN) is HIGH/ON connect the power to your ESC, you have 5sec to do so
-      5 - Once the LED is LOW/OFF the calibration should be done
-      6 - Should now be calibrated between 1000us and 2000us
-    
-  Based on the 27 April 2017 Sketch by Eric Nantel and his RC_ESC library for Robot shop
-  rewritten for use in the I2C_ESC library with the Adafruit PCA9685 16-Channel 12-bit PWM/Servo Driver - I2C interface
-  
-  Servo & Knob links
-  http://www.arduino.cc/en/Tutorial/Knob
-  http://people.interaction-ivrea.it/m.rinott
+ * ESC_Calibration
+ *  It's important to calibrate the ESC with the values (uS / microseconds) it will expect for Min and Max speed.
+ *  This one requires a little procedure:  
+ *    1 - Connect your Arduino board and your Adafruit PCA9685 16-Channel 12-bit PWM/Servo Driver - I2C interface
+ *    2 - Load the sketch to your Arduino board, then remove power
+ *    2 - Connect your ESC to the Arduino board
+ *    3 - Power your Arduino board
+ *    4 - Once the LED (LED_PIN) is HIGH/ON connect the power to your ESC, you have 5sec to do so
+ *    5 - Once the LED is LOW/OFF the calibration should be done
+ *    6 - Should now be calibrated between 1000us and 2000us
+ *
+ * Based on the 27 April 2017 Sketch by Eric Nantel and his RC_ESC library for Robot shop
+ * rewritten for use in the I2C_ESC library with the Adafruit PCA9685 16-Channel 12-bit PWM/Servo Driver - I2C interface
+ *
+ * Servo & Knob links
+ * http://www.arduino.cc/en/Tutorial/Knob
+ * http://people.interaction-ivrea.it/m.rinott
  */
 
 #include "I2C_ESC.h"
@@ -33,11 +33,12 @@
  */
 I2C_ESC myESC (0x40, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 
-void setup() {
+void setup()
+{
   // Start serial port
   Serial.begin(9600);
   Serial.println("ESC calibration over the I2C based PWM/Servo control");
-  
+
   /*
    * Set up the I2C based PWM/Servo extenders
    * begin() calls the wire.begin()
@@ -66,9 +67,7 @@ void setup() {
   */
   myESC.setPWMFreq(SERVO_FREQ);
 
-  delay(10); // Set a delay to allow the PCA9685 chips to set their frequency
-
-  delay(10); // Set a delay to allow the PCA9685 chips to set their frequency
+  delay(10); // Set a delay to allow the PCA9685 chips time to set their frequency
 
   // Start calibration cycle
   pinMode(LED_PIN, OUTPUT);       // LED Visual Output
@@ -78,6 +77,7 @@ void setup() {
   digitalWrite(LED_PIN, LOW);     // LED Low when the calibration is done (can be removed)
 }
 
-void loop() {
+void loop()
+{
   // Noting to do in the loop, Calibration all happens in set up.
 }

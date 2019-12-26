@@ -21,7 +21,8 @@
  */
 I2C_ESC myESC (0x40, SPEED_MIN, SPEED_MAX, ARM_VALUE);
 
-void setup() {
+void setup()
+{
   // start serial port
   Serial.begin(9600);
   Serial.println("I2C Controller Test with ESC");
@@ -63,7 +64,8 @@ void setup() {
   myESC.speed(ESC_PIN, SPEED_MIN); // Set ESC to minimum speed now that the ESC should be Armed
 }
 
-void loop() {
+void loop()
+{
   myESC.speed(ESC_PIN, 1200);      // Set the speed to a testing value between SPEED_MIN (1000) and SPEED_MAX (2000)
   delay(500);                      // Wait for a while 
   myESC.stop(ESC_PIN);             // Stop the ESC altogether
