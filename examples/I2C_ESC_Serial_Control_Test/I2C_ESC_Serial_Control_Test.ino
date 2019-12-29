@@ -29,7 +29,7 @@
 #define ESC_PIN (0)        // Pin for the ESC on the I2C PWM/Servo extenders this value is the same for both extenders in this example
 #define ESC_REV_PIN (1)    // Pin for the revers line singal to the ESC on the I2C PWM/Servo extenders this value is the same for both extenders in this example
 
-int oESC;                                                 // Variable for the speed sent to the ESC
+int oESC;                  // Variable for the speed sent to the ESC
 
 /*
  * Instantiate the PWM extenders
