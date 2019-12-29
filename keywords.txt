@@ -13,12 +13,17 @@ I2C_ESC	KEYWORD1
 #######################################
 
 calib	KEYWORD2
+calibArray	KEYWORD2
 arm	KEYWORD2
+armArray	KEYWORD2
 stop	KEYWORD2
+stopArray	KEYWORD2
 speed	KEYWORD2
+speedArray	KEYWORD2
+rampSpeed	KEYWORD2
+rampSpeedArray	KEYWORD2
 setCalibrationDelay	KEYWORD2
 setStopPulse	KEYWORD2
-rampSpeed	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
